@@ -1,4 +1,4 @@
-const lawyers = [
+const lawyers4 = [
   {
     "name": "Advocate Chockalingam office",
     "phone": "094433 65092",
