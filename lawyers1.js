@@ -1,4 +1,4 @@
-const lawyers = [
+const lawyers1 = [
   {
     "name": "Madras High Court: S.GUNASEKAR Advocate",
     "phone": "099417 77917",
