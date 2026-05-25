@@ -1318,6 +1318,43 @@ element.classList.add('active-menu');
 
 }
 
+ function convertToEmbedUrl(url){
+
+if(!url) return '';
+
+if(url.includes("google.com/maps/embed")){
+return url;
+}
+
+try{
+
+if(url.includes("/place/")){
+
+const place =
+url.split("/place/")[1].split("/")[0];
+
+return `https://www.google.com/maps?q=${place}&output=embed`;
+
+}
+
+if(url.includes("@")){
+
+const coords =
+url.split("@")[1].split(",").slice(0,2);
+
+return `https://maps.google.com/maps?q=${coords[0]},${coords[1]}&z=15&output=embed`;
+
+}
+
+return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+
+}catch(e){
+
+return '';
+
+}
+
+}
 function renderLawyers(data,target){
 
 let html='';
@@ -1411,43 +1448,7 @@ Book
 </button>
 
 </div>
-function convertToEmbedUrl(url){
 
-if(!url) return '';
-
-if(url.includes("google.com/maps/embed")){
-return url;
-}
-
-try{
-
-if(url.includes("/place/")){
-
-const place =
-url.split("/place/")[1].split("/")[0];
-
-return `https://www.google.com/maps?q=${place}&output=embed`;
-
-}
-
-if(url.includes("@")){
-
-const coords =
-url.split("@")[1].split(",").slice(0,2);
-
-return `https://maps.google.com/maps?q=${coords[0]},${coords[1]}&z=15&output=embed`;
-
-}
-
-return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
-
-}catch(e){
-
-return '';
-
-}
-
-}
 <iframe
 class="super-map"
 src="${convertToEmbedUrl(lawyer.map)}"
@@ -1511,7 +1512,21 @@ const filtered=lawyers.filter(lawyer=>
 renderLawyers(filtered,'searchResults');
 
 }
+function cleanPhone(phone){
 
+if(!phone) return '';
+
+phone = phone.toString();
+
+phone = phone.replace(/\D/g,'');
+
+if(phone.startsWith('91')){
+return phone;
+}
+
+return '91' + phone;
+
+}
 function shareApp(){
 
 const text=encodeURIComponent(
@@ -1589,7 +1604,7 @@ Thank you.`
 );
 
 window.open(
-`https://wa.me/91${selectedLawyer.phone}?text=${msg}`,
+`https://wa.me/${cleanPhone(selectedLawyer.phone)}?text=${msg}`,
 '_blank'
 );
 
