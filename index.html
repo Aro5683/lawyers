@@ -11,8 +11,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
 <style>
 
 *{
@@ -23,26 +21,96 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#020617,#0f172a,#1e293b);
-color:white;
-overflow-x:hidden;
+background:linear-gradient(135deg,#020617,#0f172a,#111827);
 min-height:100vh;
+overflow-x:hidden;
+color:white;
+}
+
+::-webkit-scrollbar{
+width:0;
+}
+
+.premium-topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+background:rgba(2,6,23,0.92);
+backdrop-filter:blur(20px);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 20px;
+z-index:9999;
+border-bottom:1px solid rgba(255,255,255,0.08);
+box-shadow:0 10px 30px rgba(0,0,0,0.35);
+}
+
+.top-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.top-logo{
+width:52px;
+height:52px;
+border-radius:18px;
+background:linear-gradient(135deg,#f59e0b,#f97316);
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 10px 25px rgba(245,158,11,0.35);
+}
+
+.top-logo i{
+font-size:24px;
+color:white;
+}
+
+.top-text h2{
+font-size:18px;
+font-weight:700;
+margin-bottom:3px;
+}
+
+.top-text p{
+font-size:12px;
+color:#cbd5e1;
+}
+
+.top-right{
+width:48px;
+height:48px;
+border-radius:16px;
+background:rgba(255,255,255,0.08);
+display:flex;
+justify-content:center;
+align-items:center;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.top-right i{
+font-size:22px;
+color:#fbbf24;
 }
 
 .container{
 width:100%;
 max-width:520px;
 margin:auto;
-padding:20px 15px 120px;
+padding:100px 15px 120px;
 }
 
 .glass{
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.08);
-border-radius:30px;
-padding:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.45);
+border-radius:32px;
+padding:28px 22px;
+box-shadow:0 20px 50px rgba(0,0,0,0.45);
 }
 
 .logo{
@@ -50,10 +118,11 @@ width:120px;
 height:120px;
 border-radius:50%;
 background:white;
-margin:0 auto 20px;
 display:flex;
 justify-content:center;
 align-items:center;
+margin:0 auto 20px;
+box-shadow:0 15px 35px rgba(255,255,255,0.12);
 }
 
 .logo i{
@@ -72,7 +141,8 @@ margin-bottom:10px;
 text-align:center;
 font-size:14px;
 color:#cbd5e1;
-margin-bottom:30px;
+margin-bottom:28px;
+line-height:1.7;
 }
 
 .btn-group{
@@ -84,7 +154,7 @@ gap:15px;
 flex:1;
 padding:15px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 font-size:15px;
 font-weight:600;
 cursor:pointer;
@@ -128,7 +198,7 @@ font-size:14px;
 display:flex;
 align-items:center;
 background:rgba(255,255,255,0.08);
-border-radius:16px;
+border-radius:18px;
 overflow:hidden;
 border:1px solid rgba(255,255,255,0.08);
 }
@@ -137,6 +207,7 @@ border:1px solid rgba(255,255,255,0.08);
 width:55px;
 text-align:center;
 color:#fbbf24;
+font-size:18px;
 }
 
 .input-box input,
@@ -163,17 +234,18 @@ display:flex;
 gap:10px;
 font-size:13px;
 margin-bottom:20px;
+line-height:1.7;
 }
 
 .submit-btn{
 width:100%;
 padding:16px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 background:linear-gradient(135deg,#22c55e,#16a34a);
 color:white;
 font-size:16px;
-font-weight:600;
+font-weight:700;
 cursor:pointer;
 }
 
@@ -186,15 +258,29 @@ color:#cbd5e1;
 
 .switch span{
 color:#fbbf24;
-font-weight:600;
 cursor:pointer;
+font-weight:600;
 }
 
-.topbar{
+.device-box{
 background:rgba(255,255,255,0.08);
 padding:16px;
-border-radius:18px;
+border-radius:20px;
 margin-bottom:20px;
+border:1px dashed rgba(255,255,255,0.18);
+}
+
+.device-box h3{
+font-size:14px;
+margin-bottom:8px;
+color:#fbbf24;
+}
+
+.device-box p{
+font-size:13px;
+line-height:1.7;
+word-break:break-all;
+color:#e2e8f0;
 }
 
 .page{
@@ -214,11 +300,11 @@ gap:15px;
 .category-card{
 background:rgba(255,255,255,0.08);
 padding:18px;
-border-radius:24px;
+border-radius:26px;
 text-align:center;
+border:1px solid rgba(255,255,255,0.08);
 cursor:pointer;
 transition:0.3s;
-border:1px solid rgba(255,255,255,0.08);
 }
 
 .category-card:hover{
@@ -228,12 +314,13 @@ border-color:#fbbf24;
 
 .category-card i{
 font-size:30px;
-margin-bottom:10px;
+margin-bottom:12px;
 color:#fbbf24;
 }
 
 .category-card h4{
 font-size:14px;
+line-height:1.6;
 }
 
 .search-box{
@@ -247,7 +334,7 @@ flex:1;
 padding:15px;
 border:none;
 outline:none;
-border-radius:16px;
+border-radius:18px;
 background:rgba(255,255,255,0.08);
 color:white;
 }
@@ -255,30 +342,45 @@ color:white;
 .search-box button{
 padding:15px 20px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 background:linear-gradient(135deg,#f59e0b,#f97316);
 color:white;
 font-weight:600;
 cursor:pointer;
 }
 
-.lawyer-card{
+.super-lawyer-card{
 background:rgba(255,255,255,0.08);
-border-radius:24px;
-padding:20px;
-margin-bottom:22px;
+border-radius:30px;
+padding:22px;
+margin-bottom:24px;
 border:1px solid rgba(255,255,255,0.08);
+box-shadow:0 15px 40px rgba(0,0,0,0.35);
+position:relative;
+overflow:hidden;
 }
 
-.lawyer-top{
+.super-lawyer-card::before{
+content:'';
+position:absolute;
+width:140px;
+height:140px;
+border-radius:50%;
+background:rgba(255,255,255,0.04);
+top:-50px;
+right:-50px;
+}
+
+.lawyer-head{
 display:flex;
-gap:15px;
-margin-bottom:15px;
+gap:18px;
+align-items:center;
+margin-bottom:18px;
 }
 
 .lawyer-avatar{
-width:70px;
-height:70px;
+width:80px;
+height:80px;
 border-radius:50%;
 background:white;
 display:flex;
@@ -287,42 +389,52 @@ align-items:center;
 }
 
 .lawyer-avatar i{
-font-size:28px;
+font-size:32px;
 color:#0f172a;
 }
 
-.lawyer-info h3{
-font-size:20px;
-margin-bottom:5px;
+.lawyer-main h2{
+font-size:22px;
+margin-bottom:6px;
 color:#fbbf24;
 }
 
-.lawyer-info p{
+.lawyer-main p{
 font-size:13px;
 color:#cbd5e1;
-}
-
-.lawyer-details p{
-font-size:14px;
-margin-bottom:10px;
 line-height:1.7;
 }
 
-.action-buttons{
+.info-line{
+margin-bottom:10px;
+font-size:14px;
+line-height:1.7;
+color:#e2e8f0;
+}
+
+.info-line i{
+color:#fbbf24;
+margin-right:8px;
+}
+
+.action-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
-margin-top:18px;
+margin-top:20px;
 }
 
-.action-buttons a{
+.action-btn{
 text-decoration:none;
-padding:14px;
-border-radius:16px;
-text-align:center;
+padding:15px;
+border-radius:18px;
 font-size:14px;
 font-weight:600;
+text-align:center;
 color:white;
+transition:0.3s;
+border:none;
+cursor:pointer;
 }
 
 .call-btn{
@@ -341,20 +453,21 @@ background:linear-gradient(135deg,#10b981,#059669);
 background:linear-gradient(135deg,#f59e0b,#f97316);
 }
 
-.map-frame{
+.super-map{
 width:100%;
-height:220px;
+height:230px;
 border:none;
-border-radius:18px;
-margin-top:18px;
+border-radius:22px;
+margin-top:22px;
 }
 
 .account-card,
 .policy-card{
 background:rgba(255,255,255,0.08);
-padding:18px;
-border-radius:20px;
-margin-bottom:18px;
+padding:20px;
+border-radius:24px;
+margin-bottom:20px;
+border:1px solid rgba(255,255,255,0.08);
 }
 
 .account-card h3,
@@ -366,7 +479,7 @@ color:#fbbf24;
 .account-card p,
 .policy-card p{
 font-size:14px;
-line-height:1.7;
+line-height:1.8;
 margin-bottom:10px;
 }
 
@@ -377,14 +490,15 @@ left:50%;
 transform:translateX(-50%);
 width:95%;
 max-width:520px;
-background:rgba(15,23,42,0.95);
+background:rgba(2,6,23,0.95);
 backdrop-filter:blur(20px);
 padding:14px 10px;
-border-radius:24px;
+border-radius:28px;
 display:flex;
 justify-content:space-around;
 align-items:center;
 z-index:999;
+border:1px solid rgba(255,255,255,0.08);
 }
 
 .menu-item{
@@ -393,8 +507,8 @@ flex-direction:column;
 align-items:center;
 gap:5px;
 font-size:12px;
-cursor:pointer;
 color:#cbd5e1;
+cursor:pointer;
 }
 
 .menu-item i{
@@ -410,16 +524,17 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%) scale(0.8);
-width:90%;
-max-width:350px;
+width:92%;
+max-width:380px;
 background:white;
-border-radius:24px;
-padding:28px 24px;
+border-radius:30px;
+padding:30px 24px;
 text-align:center;
-z-index:9999;
+z-index:99999;
 opacity:0;
 visibility:hidden;
 transition:0.35s;
+box-shadow:0 25px 60px rgba(0,0,0,0.45);
 }
 
 .popup.show{
@@ -448,17 +563,97 @@ margin-bottom:10px;
 
 .popup p{
 color:#475569;
-line-height:1.7;
+line-height:1.8;
+font-size:14px;
 }
 
 .popup button{
-margin-top:18px;
+margin-top:20px;
+padding:14px 30px;
 border:none;
-padding:12px 28px;
-border-radius:14px;
+border-radius:16px;
 background:linear-gradient(135deg,#f59e0b,#f97316);
 color:white;
-font-weight:600;
+font-weight:700;
+cursor:pointer;
+}
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(6px);
+z-index:9999;
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+}
+
+.overlay.show{
+opacity:1;
+visibility:visible;
+}
+
+.book-popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.8);
+width:92%;
+max-width:420px;
+background:white;
+border-radius:30px;
+padding:28px 24px;
+z-index:99999;
+opacity:0;
+visibility:hidden;
+transition:0.35s;
+box-shadow:0 25px 60px rgba(0,0,0,0.45);
+}
+
+.book-popup.show{
+opacity:1;
+visibility:visible;
+transform:translate(-50%,-50%) scale(1);
+}
+
+.book-popup h2{
+color:#0f172a;
+margin-bottom:10px;
+}
+
+.book-popup p{
+color:#64748b;
+line-height:1.7;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.book-popup textarea{
+width:100%;
+height:130px;
+border:none;
+outline:none;
+background:#f1f5f9;
+border-radius:18px;
+padding:18px;
+resize:none;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.book-popup button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:white;
+font-size:15px;
+font-weight:700;
 cursor:pointer;
 }
 
@@ -468,17 +663,45 @@ cursor:pointer;
 
 <body>
 
+<div class="premium-topbar">
+
+<div class="top-left">
+
+<div class="top-logo">
+<i class="fa-solid fa-scale-balanced"></i>
+</div>
+
+<div class="top-text">
+
+<h2 id="topUsername">
+Welcome
+</h2>
+
+<p>
+Tamil Nadu Premium Legal Platform
+</p>
+
+</div>
+
+</div>
+
+<div class="top-right">
+<i class="fa-solid fa-crown"></i>
+</div>
+
+</div>
+
 <div class="container">
 
-<div class="glass">
-
-<div id="welcomeScreen">
+<div class="glass" id="welcomeScreen">
 
 <div class="logo">
 <i class="fa-solid fa-scale-balanced"></i>
 </div>
 
-<h1 class="title">Lawyer Connect</h1>
+<h1 class="title">
+Lawyer Connect
+</h1>
 
 <p class="subtitle">
 Premium Tamil Nadu Lawyer Consultation Platform
@@ -498,7 +721,17 @@ Sign In
 
 </div>
 
-<div class="form-box" id="signupForm">
+<div class="glass form-box" id="signupForm">
+
+<div class="device-box">
+
+<h3>
+Device ID
+</h3>
+
+<p id="deviceIdText"></p>
+
+</div>
 
 <div class="input-group">
 <label>Name</label>
@@ -548,7 +781,7 @@ Sign In
 <div class="checkbox">
 <input type="checkbox" id="agree">
 <div>
-I agree to Terms & Conditions and Privacy Policy
+I agree to Terms & Conditions and Privacy Policy.
 </div>
 </div>
 
@@ -558,12 +791,14 @@ Register Now
 
 <div class="switch">
 Already have account?
-<span onclick="showForm('signin')">Sign In</span>
+<span onclick="showForm('signin')">
+Sign In
+</span>
 </div>
 
 </div>
 
-<div class="form-box" id="signinForm">
+<div class="glass form-box" id="signinForm">
 
 <div class="input-group">
 <label>Phone Number</label>
@@ -580,10 +815,6 @@ Sign In
 </div>
 
 <div id="dashboard" style="display:none;">
-
-<div class="topbar">
-<h3 id="topWelcome"></h3>
-</div>
 
 <div id="homePage" class="page active">
 
@@ -678,10 +909,16 @@ Search
 <h3>Registration Details</h3>
 
 <p><strong>Name:</strong> <span id="accName"></span></p>
+
 <p><strong>DOB:</strong> <span id="accDob"></span></p>
+
 <p><strong>Gender:</strong> <span id="accGender"></span></p>
+
 <p><strong>District:</strong> <span id="accDistrict"></span></p>
+
 <p><strong>Phone:</strong> <span id="accPhone"></span></p>
+
+<p><strong>Device ID:</strong> <span id="accDevice"></span></p>
 
 </div>
 
@@ -695,26 +932,19 @@ Lawyer Connect only connects users with lawyers.
 <div class="policy-card">
 <h3>Terms & Conditions</h3>
 <p>
-Users must provide correct details.
+Users must provide correct information.
 </p>
 </div>
 
 <div class="policy-card">
 <h3>Privacy Policy</h3>
 <p>
-Your data is securely stored.
+Your information is securely protected.
 </p>
 </div>
 
 </div>
 
-
-
-</div>
-
-</div>
-
-</div>
 <div class="bottom-menu">
 
 <div class="menu-item active-menu" onclick="openPage('homePage',this)">
@@ -738,38 +968,90 @@ Your data is securely stored.
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="book-popup" id="bookPopup">
+
+<h2>Book Appointment</h2>
+
+<p>
+Describe your legal problem briefly.
+</p>
+
+<textarea
+id="problemText"
+placeholder="Explain your legal issue..."
+></textarea>
+
+<button onclick="sendBooking()">
+<i class="fa-brands fa-whatsapp"></i>
+ Send Request
+</button>
+
+</div>
+
 <div class="popup" id="popup">
 
-<i id="popupIcon" class="fa-solid fa-circle-exclamation"></i>
+<i id="popupIcon" class="fa-solid fa-circle-check"></i>
 
 <h2 id="popupTitle"></h2>
 
 <p id="popupMessage"></p>
 
-<button onclick="closePopup()">OK</button>
+<button onclick="closePopup()">
+OK
+</button>
 
 </div>
 
 <script>
 
-const SCRIPT_URL = "PASTE_GOOGLE_SCRIPT_URL";
+const SCRIPT_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
 
-let lawyers = [];
+function getDeviceId(){
 
-Papa.parse("ultimate_tamilnadu_lawyers1.csv",{
+let id = localStorage.getItem('deviceId');
 
-download:true,
-header:true,
+if(!id){
 
-complete:function(results){
+id='LAW-'+
+Math.random().toString(36).substring(2,10).toUpperCase()
++
+Date.now();
 
-lawyers = results.data;
-
-console.log(lawyers);
+localStorage.setItem('deviceId',id);
 
 }
 
-});
+return id;
+
+}
+
+document.getElementById('deviceIdText').innerText =
+getDeviceId();
+
+</script>
+
+<script src="lawyers1.js"></script>
+<script src="lawyers2.js"></script>
+<script src="lawyers3.js"></script>
+<script src="lawyers4.js"></script>
+
+<script>
+
+const lawyers = [
+...lawyers1,
+...lawyers2,
+...lawyers3,
+...lawyers4
+];
+
+let selectedLawyer = null;
 
 function showPopup(type,title,message){
 
@@ -780,6 +1062,7 @@ popup.classList.remove('success','error');
 popup.classList.add(type);
 
 document.getElementById('popupTitle').innerText=title;
+
 document.getElementById('popupMessage').innerText=message;
 
 if(type==='success'){
@@ -801,6 +1084,7 @@ function showForm(type){
 document.getElementById('welcomeScreen').style.display='none';
 
 document.getElementById('signupForm').classList.remove('active');
+
 document.getElementById('signinForm').classList.remove('active');
 
 if(type==='signup'){
@@ -813,13 +1097,13 @@ document.getElementById('signinForm').classList.add('active');
 
 }
 
-function registerUser(){
+async function registerUser(){
 
 const name=document.getElementById('name').value.trim();
 const dob=document.getElementById('dob').value;
 const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
-const phone=document.getElementById('phone').value;
+const phone=document.getElementById('phone').value.trim();
 const agree=document.getElementById('agree').checked;
 
 if(!name || !dob || !gender || !district || !phone){
@@ -846,52 +1130,105 @@ return;
 
 }
 
-const user={
+const userData = {
+
 name,
 dob,
 gender,
 district,
-phone
+phone,
+deviceId:getDeviceId(),
+status:'YES'
+
 };
 
-localStorage.setItem('lawyerUser',JSON.stringify(user));
+try{
 
-openDashboard(user);
+await fetch(SCRIPT_URL,{
+
+method:'POST',
+
+body:JSON.stringify(userData)
+
+});
+
+localStorage.setItem(
+'lawyerUser',
+JSON.stringify(userData)
+);
+
+openDashboard(userData);
 
 showPopup(
 'success',
 'Registration Successful',
-'Your account created successfully.'
+'Welcome to Lawyer Connect Premium.'
+);
+
+}catch(error){
+
+showPopup(
+'error',
+'Registration Failed',
+'Unable to connect server.'
 );
 
 }
 
-function loginUser(){
+}
 
-const phone=document.getElementById('loginPhone').value;
+async function loginUser(){
 
-const user=JSON.parse(localStorage.getItem('lawyerUser'));
+const phone =
+document.getElementById('loginPhone').value.trim();
 
 if(!phone){
 
 showPopup(
 'error',
 'Phone Required',
-'Please enter phone number.'
+'Please enter mobile number.'
 );
 
 return;
 
 }
 
-if(user && user.phone===phone){
+try{
 
-openDashboard(user);
+const response =
+await fetch(
+SCRIPT_URL + '?phone=' + phone
+);
+
+const data =
+await response.json();
+
+if(data.status === 'NO'){
+
+showPopup(
+'error',
+'Access Denied',
+'Admin denied your account access.'
+);
+
+return;
+
+}
+
+if(data.success){
+
+localStorage.setItem(
+'lawyerUser',
+JSON.stringify(data.user)
+);
+
+openDashboard(data.user);
 
 showPopup(
 'success',
 'Login Successful',
-'Welcome back.'
+'Welcome back to Lawyer Connect.'
 );
 
 }else{
@@ -899,7 +1236,17 @@ showPopup(
 showPopup(
 'error',
 'Account Not Found',
-'Invalid mobile number.'
+'No account found.'
+);
+
+}
+
+}catch(error){
+
+showPopup(
+'error',
+'Login Failed',
+'Something went wrong.'
 );
 
 }
@@ -908,19 +1255,23 @@ showPopup(
 
 function openDashboard(user){
 
-document.getElementById('welcomeScreen').style.display='none';
-document.getElementById('signupForm').style.display='none';
-document.getElementById('signinForm').style.display='none';
-
 document.getElementById('dashboard').style.display='block';
 
-document.getElementById('topWelcome').innerText='Welcome, '+user.name;
+document.getElementById('welcomeScreen').style.display='none';
+
+document.getElementById('signupForm').style.display='none';
+
+document.getElementById('signinForm').style.display='none';
+
+document.getElementById('topUsername').innerText =
+'Welcome, ' + user.name;
 
 document.getElementById('accName').innerText=user.name;
 document.getElementById('accDob').innerText=user.dob;
 document.getElementById('accGender').innerText=user.gender;
 document.getElementById('accDistrict').innerText=user.district;
 document.getElementById('accPhone').innerText=user.phone;
+document.getElementById('accDevice').innerText=user.deviceId;
 
 }
 
@@ -958,8 +1309,14 @@ if(data.length===0){
 
 html=`
 
-<div class="lawyer-card">
-<h3>No Lawyers Found</h3>
+<div class="super-lawyer-card">
+
+<h2>No Lawyers Found</h2>
+
+<p>
+No lawyers available currently.
+</p>
+
 </div>
 
 `;
@@ -968,57 +1325,79 @@ html=`
 
 data.forEach(lawyer=>{
 
-html+=`
+html += `
 
-<div class="lawyer-card">
+<div class="super-lawyer-card">
 
-<div class="lawyer-top">
+<div class="lawyer-head">
 
 <div class="lawyer-avatar">
 <i class="fa-solid fa-scale-balanced"></i>
 </div>
 
-<div class="lawyer-info">
-<h3>${lawyer.name || ''}</h3>
+<div class="lawyer-main">
+
+<h2>${lawyer.name || ''}</h2>
+
 <p>${lawyer.category || ''}</p>
-<p>${lawyer.place || ''}</p>
-</div>
+
+<p>${lawyer.district || lawyer.place || ''}</p>
 
 </div>
 
-<div class="lawyer-details">
-
-<p><strong>Phone:</strong> ${lawyer.phone || ''}</p>
-
-<p><strong>Email:</strong> ${lawyer.email || ''}</p>
-
-<p><strong>Address:</strong> ${lawyer.address || ''}</p>
-
 </div>
 
-<div class="action-buttons">
+<div class="info-line">
+<i class="fa-solid fa-phone"></i>
+${lawyer.phone || ''}
+</div>
 
-<a href="tel:${lawyer.phone}" class="call-btn">
+<div class="info-line">
+<i class="fa-solid fa-envelope"></i>
+${lawyer.email || ''}
+</div>
+
+<div class="info-line">
+<i class="fa-solid fa-location-dot"></i>
+${lawyer.address || ''}
+</div>
+
+<div class="action-grid">
+
+<a
+href="tel:${lawyer.phone}"
+class="action-btn call-btn"
+>
 Call
 </a>
 
-<a href="mailto:${lawyer.email}" class="mail-btn">
+<a
+href="mailto:${lawyer.email}"
+class="action-btn mail-btn"
+>
 Email
 </a>
 
-<a href="https://wa.me/91${lawyer.phone}" target="_blank" class="whatsapp-btn">
+<a
+href="https://wa.me/91${lawyer.phone}"
+target="_blank"
+class="action-btn whatsapp-btn"
+>
 WhatsApp
 </a>
 
-<a href="#" class="book-btn">
+<button
+class="action-btn book-btn"
+onclick='openBooking(${JSON.stringify(lawyer)})'
+>
 Book
-</a>
+</button>
 
 </div>
 
 <iframe
-class="map-frame"
-src="${lawyer.map_link || ''}"
+class="super-map"
+src="${lawyer.map || lawyer.map_link || ''}"
 loading="lazy"
 allowfullscreen>
 </iframe>
@@ -1041,11 +1420,11 @@ const user=JSON.parse(localStorage.getItem('lawyerUser'));
 
 const filtered=lawyers.filter(lawyer=>
 
-lawyer.category &&
-lawyer.place &&
-lawyer.category.toLowerCase()===category.toLowerCase()
+(lawyer.category || '').toLowerCase()===category.toLowerCase()
+
 &&
-lawyer.place.toLowerCase()===user.district.toLowerCase()
+
+((lawyer.district || lawyer.place || '').toLowerCase()===user.district.toLowerCase())
 
 );
 
@@ -1071,8 +1450,9 @@ return;
 
 const filtered=lawyers.filter(lawyer=>
 
-lawyer.place &&
-lawyer.place.toLowerCase().includes(district.toLowerCase())
+(lawyer.district || lawyer.place || '')
+.toLowerCase()
+.includes(district.toLowerCase())
 
 );
 
@@ -1090,6 +1470,92 @@ window.open(
 'https://wa.me/?text='+text,
 '_blank'
 );
+
+}
+
+function openBooking(lawyer){
+
+selectedLawyer = lawyer;
+
+document.getElementById('bookPopup').classList.add('show');
+
+document.getElementById('overlay').classList.add('show');
+
+}
+
+document.getElementById('overlay').addEventListener('click',()=>{
+
+document.getElementById('bookPopup').classList.remove('show');
+
+document.getElementById('overlay').classList.remove('show');
+
+});
+
+function sendBooking(){
+
+const problem =
+document.getElementById('problemText').value.trim();
+
+if(!problem){
+
+showPopup(
+'error',
+'Problem Required',
+'Please explain your legal issue.'
+);
+
+return;
+
+}
+
+const user =
+JSON.parse(localStorage.getItem('lawyerUser'));
+
+const msg = encodeURIComponent(
+
+`Hello Advocate,
+
+I would like to request an appointment.
+
+Name: ${user.name}
+
+District: ${user.district}
+
+Phone: ${user.phone}
+
+Lawyer Category: ${selectedLawyer.category}
+
+Lawyer Name: ${selectedLawyer.name}
+
+My Legal Problem:
+${problem}
+
+Kindly provide appointment details.
+
+Thank you.`
+
+);
+
+window.open(
+`https://wa.me/91${selectedLawyer.phone}?text=${msg}`,
+'_blank'
+);
+
+document.getElementById('bookPopup').classList.remove('show');
+
+document.getElementById('overlay').classList.remove('show');
+
+document.getElementById('problemText').value='';
+
+setTimeout(()=>{
+
+showPopup(
+'success',
+'Appointment Request Sent',
+'Excellent choice. Your consultation request has been sent successfully. Wishing you the best legal support and positive outcome.'
+);
+
+},1000);
 
 }
 
