@@ -1632,17 +1632,46 @@ document.getElementById(target).innerHTML=html;
 
 function showCategory(category){
 
-const user=JSON.parse(localStorage.getItem('lawyerUser'));
+const user =
+JSON.parse(localStorage.getItem('lawyerUser'));
 
-const filtered=lawyers.filter(lawyer=>
+const filtered = lawyers.filter(lawyer => {
 
-(lawyer.category || '').toLowerCase()===category.toLowerCase()
+const lawyerCategory =
+(lawyer.category || '')
+.toString()
+.trim()
+.toLowerCase();
+
+const lawyerDistrict =
+(lawyer.district || lawyer.place || '')
+.toString()
+.trim()
+.toLowerCase();
+
+const userDistrict =
+(user.district || '')
+.toString()
+.trim()
+.toLowerCase();
+
+const selectedCategory =
+category
+.toString()
+.trim()
+.toLowerCase();
+
+return (
+
+lawyerCategory.includes(selectedCategory)
 
 &&
 
-((lawyer.district || lawyer.place || '').toLowerCase()===user.district.toLowerCase())
+lawyerDistrict.includes(userDistrict)
 
 );
+
+});
 
 renderLawyers(filtered,'lawyerResults');
 
@@ -1651,10 +1680,14 @@ renderLawyers(filtered,'lawyerResults');
 function searchDistrictLawyers(){
 
 const district =
-document.getElementById('searchDistrict').value;
+document.getElementById('searchDistrict').value
+.trim()
+.toLowerCase();
 
 const category =
-document.getElementById('searchCategory').value;
+document.getElementById('searchCategory').value
+.trim()
+.toLowerCase();
 
 if(!district || !category){
 
@@ -1668,17 +1701,31 @@ return;
 
 }
 
-const filtered = lawyers.filter(lawyer =>
+const filtered = lawyers.filter(lawyer => {
 
+const lawyerDistrict =
 (lawyer.district || lawyer.place || '')
-.toLowerCase() === district.toLowerCase()
+.toString()
+.trim()
+.toLowerCase();
+
+const lawyerCategory =
+(lawyer.category || '')
+.toString()
+.trim()
+.toLowerCase();
+
+return (
+
+lawyerDistrict.includes(district)
 
 &&
 
-(lawyer.category || '')
-.toLowerCase() === category.toLowerCase()
+lawyerCategory.includes(category)
 
 );
+
+});
 
 renderLawyers(filtered,'searchResults');
 
