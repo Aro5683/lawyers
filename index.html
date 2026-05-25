@@ -954,7 +954,7 @@ onclick="searchDistrictLawyers()">
 Search Lawyers
 
 </button>
-
+</br>
 <div id="searchResults"></div>
 
 </div>
@@ -1447,38 +1447,12 @@ ${lawyer.phone || ''}
 </div>
 
 <div class="info-line">
-<i class="fa-solid fa-envelope"></i>
-${lawyer.email || ''}
-</div>
-
-<div class="info-line">
 <i class="fa-solid fa-location-dot"></i>
 ${lawyer.address || ''}
 </div>
 
 <div class="action-grid">
 
-<a
-href="tel:${lawyer.phone}"
-class="action-btn call-btn"
->
-Call
-</a>
-
-<a
-href="mailto:${lawyer.email}"
-class="action-btn mail-btn"
->
-Email
-</a>
-
-<a
-href="https://wa.me/${cleanPhone(lawyer.phone)}"
-target="_blank"
-class="action-btn whatsapp-btn"
->
-WhatsApp
-</a>
 
 <button
 class="action-btn book-btn"
