@@ -1216,12 +1216,29 @@ getDeviceId();
 <script src="lawyers4.js"></script>
 
 <script>
+const dummyLawyers = [
 
+{
+name:"Sowmiya Demo ",
+phone:"9043226067",
+email:"demo1@lawyer.com",
+district:"all",
+category:"all",
+address:"Demo Legal Chamber, Thanjavur",
+map:"https://maps.google.com/maps?q=thanjavur&output=embed"
+}
+
+
+];
 const lawyers = [
+
+...dummyLawyers,
+
 ...lawyers1,
 ...lawyers2,
 ...lawyers3,
 ...lawyers4
+
 ];
 
 let selectedLawyer = null;
@@ -1661,13 +1678,22 @@ category
 .trim()
 .toLowerCase();
 
+const isDummy =
+lawyer.category === 'all';
+
 return (
+
+isDummy ||
+
+(
 
 lawyerCategory.includes(selectedCategory)
 
 &&
 
 lawyerDistrict.includes(userDistrict)
+
+)
 
 );
 
@@ -1676,7 +1702,6 @@ lawyerDistrict.includes(userDistrict)
 renderLawyers(filtered,'lawyerResults');
 
 }
-
 function searchDistrictLawyers(){
 
 const district =
@@ -1715,13 +1740,22 @@ const lawyerCategory =
 .trim()
 .toLowerCase();
 
+const isDummy =
+lawyer.category === 'all';
+
 return (
+
+isDummy ||
+
+(
 
 lawyerDistrict.includes(district)
 
 &&
 
 lawyerCategory.includes(category)
+
+)
 
 );
 
