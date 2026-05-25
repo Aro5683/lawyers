@@ -1277,7 +1277,7 @@ const dob=document.getElementById('dob').value;
 const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
 const phone=document.getElementById('phone').value.trim();
-const agree=document.getElementById('agree').checked;
+const agree=document.getElementById('agree').checked();
 
 if(!name || !dob || !gender || !district || !phone){
 
@@ -1303,6 +1303,34 @@ return;
 
 }
 
+const deviceId = getDeviceId();
+
+try{
+
+/* CHECK DEVICE BAN */
+
+const checkResponse =
+await fetch(
+SCRIPT_URL + '?deviceId=' + deviceId
+);
+
+const checkData =
+await checkResponse.json();
+
+if(checkData.status === 'NO'){
+
+showPopup(
+'error',
+'Access Blocked',
+'Lawyers Connect banned you.'
+);
+
+return;
+
+}
+
+/* SAVE USER */
+
 const userData = {
 
 name,
@@ -1310,16 +1338,18 @@ dob,
 gender,
 district,
 phone,
-deviceId:getDeviceId(),
+deviceId,
 status:'YES'
 
 };
 
-try{
-
 await fetch(SCRIPT_URL,{
 
 method:'POST',
+
+headers:{
+'Content-Type':'application/json'
+},
 
 body:JSON.stringify(userData)
 
@@ -1342,14 +1372,14 @@ showPopup(
 
 showPopup(
 'error',
-'Registration Failed',
-'Unable to connect server.'
+'Server Error',
+'Unable to connect Google Sheet.'
 );
 
 }
 
 }
-
+ 
 async function loginUser(){
 
 const phone =
@@ -1367,11 +1397,15 @@ return;
 
 }
 
+const deviceId = getDeviceId();
+
 try{
 
 const response =
 await fetch(
-SCRIPT_URL + '?phone=' + phone
+SCRIPT_URL +
+'?phone=' + phone +
+'&deviceId=' + deviceId
 );
 
 const data =
@@ -1381,8 +1415,8 @@ if(data.status === 'NO'){
 
 showPopup(
 'error',
-'Access Denied',
-'Admin denied your account access.'
+'Access Blocked',
+'Lawyers Connect banned you.'
 );
 
 return;
@@ -1401,7 +1435,7 @@ openDashboard(data.user);
 showPopup(
 'success',
 'Login Successful',
-'Welcome back to Lawyer Connect.'
+'Welcome back.'
 );
 
 }else{
@@ -1419,13 +1453,12 @@ showPopup(
 showPopup(
 'error',
 'Login Failed',
-'Something went wrong.'
+'Unable to connect server.'
 );
 
 }
 
 }
-
 function openDashboard(user){
 
 document.getElementById('dashboard').style.display='block';
