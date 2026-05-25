@@ -1394,14 +1394,49 @@ Book
 </button>
 
 </div>
+function convertToEmbedUrl(url){
 
+if(!url) return '';
+
+if(url.includes("google.com/maps/embed")){
+return url;
+}
+
+try{
+
+if(url.includes("/place/")){
+
+const place =
+url.split("/place/")[1].split("/")[0];
+
+return `https://www.google.com/maps?q=${place}&output=embed`;
+
+}
+
+if(url.includes("@")){
+
+const coords =
+url.split("@")[1].split(",").slice(0,2);
+
+return `https://maps.google.com/maps?q=${coords[0]},${coords[1]}&z=15&output=embed`;
+
+}
+
+return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+
+}catch(e){
+
+return '';
+
+}
+
+}
 <iframe
 class="super-map"
-src="${lawyer.map || lawyer.map_link || ''}"
+src="${convertToEmbedUrl(lawyer.map)}"
 loading="lazy"
 allowfullscreen>
 </iframe>
-
 </div>
 
 `;
