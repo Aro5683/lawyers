@@ -1184,7 +1184,7 @@ OK
 
 <script>
 
-const SCRIPT_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxxxxxxx/exec";
 
 function getDeviceId(){
 
@@ -1294,8 +1294,7 @@ const dob=document.getElementById('dob').value;
 const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
 const phone=document.getElementById('phone').value.trim();
-const agree=document.getElementById('agree').checked();
-
+const agree=document.getElementById('agree').checked;
 if(!name || !dob || !gender || !district || !phone){
 
 showPopup(
@@ -1631,7 +1630,7 @@ Book
 
 <iframe
 class="super-map"
-src="${convertToEmbedUrl(lawyer.map)}"
+src="${convertToEmbedUrl(lawyer.map || lawyer.map_link)}"
 loading="lazy"
 allowfullscreen>
 </iframe>
@@ -1760,6 +1759,8 @@ lawyerCategory.includes(category)
 );
 
 });
+
+console.log(filtered);
 
 renderLawyers(filtered,'searchResults');
 
