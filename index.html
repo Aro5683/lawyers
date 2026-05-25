@@ -1184,7 +1184,7 @@ OK
 
 <script>
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxxxxxxx/exec";
+
 
 function getDeviceId(){
 
@@ -1287,7 +1287,7 @@ document.getElementById('signinForm').classList.add('active');
 
 }
 
-async function registerUser(){
+function registerUser(){
 
 const name=document.getElementById('name').value.trim();
 const dob=document.getElementById('dob').value;
@@ -1295,6 +1295,7 @@ const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
 const phone=document.getElementById('phone').value.trim();
 const agree=document.getElementById('agree').checked;
+
 if(!name || !dob || !gender || !district || !phone){
 
 showPopup(
@@ -1319,34 +1320,6 @@ return;
 
 }
 
-const deviceId = getDeviceId();
-
-try{
-
-/* CHECK DEVICE BAN */
-
-const checkResponse =
-await fetch(
-SCRIPT_URL + '?deviceId=' + deviceId
-);
-
-const checkData =
-await checkResponse.json();
-
-if(checkData.status === 'NO'){
-
-showPopup(
-'error',
-'Access Blocked',
-'Lawyers Connect banned you.'
-);
-
-return;
-
-}
-
-/* SAVE USER */
-
 const userData = {
 
 name,
@@ -1354,22 +1327,9 @@ dob,
 gender,
 district,
 phone,
-deviceId,
-status:'YES'
+deviceId:getDeviceId()
 
 };
-
-await fetch(SCRIPT_URL,{
-
-method:'POST',
-
-headers:{
-'Content-Type':'application/json'
-},
-
-body:JSON.stringify(userData)
-
-});
 
 localStorage.setItem(
 'lawyerUser',
@@ -1384,19 +1344,8 @@ showPopup(
 'Welcome to Lawyer Connect Premium.'
 );
 
-}catch(error){
-
-showPopup(
-'error',
-'Server Error',
-'Unable to connect Google Sheet.'
-);
-
 }
-
-}
- 
-async function loginUser(){
+function loginUser(){
 
 const phone =
 document.getElementById('loginPhone').value.trim();
@@ -1413,40 +1362,12 @@ return;
 
 }
 
-const deviceId = getDeviceId();
+const user =
+JSON.parse(localStorage.getItem('lawyerUser'));
 
-try{
+if(user && user.phone === phone){
 
-const response =
-await fetch(
-SCRIPT_URL +
-'?phone=' + phone +
-'&deviceId=' + deviceId
-);
-
-const data =
-await response.json();
-
-if(data.status === 'NO'){
-
-showPopup(
-'error',
-'Access Blocked',
-'Lawyers Connect banned you.'
-);
-
-return;
-
-}
-
-if(data.success){
-
-localStorage.setItem(
-'lawyerUser',
-JSON.stringify(data.user)
-);
-
-openDashboard(data.user);
+openDashboard(user);
 
 showPopup(
 'success',
@@ -1460,16 +1381,6 @@ showPopup(
 'error',
 'Account Not Found',
 'No account found.'
-);
-
-}
-
-}catch(error){
-
-showPopup(
-'error',
-'Login Failed',
-'Unable to connect server.'
 );
 
 }
