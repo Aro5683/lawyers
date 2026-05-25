@@ -837,62 +837,62 @@ Sign Up
 
 <div class="category-grid">
 
-<div class="category-card" onclick="showCategory('family lawyer')">
+<div class="category-card" onclick="openProblemPopup('family lawyer')">
 <i class="fa-solid fa-people-roof"></i>
 <h4>Family Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('criminal lawyer')">
+<div class="category-card" onclick="openProblemPopup('criminal lawyer')">
 <i class="fa-solid fa-handcuffs"></i>
 <h4>Criminal Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('divorce lawyer')">
+<div class="category-card" onclick="openProblemPopup('divorce lawyer')">
 <i class="fa-solid fa-heart-crack"></i>
 <h4>Divorce Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('civil lawyer')">
+<div class="category-card" onclick="openProblemPopup('civil lawyer')">
 <i class="fa-solid fa-building-columns"></i>
 <h4>Civil Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('property lawyer')">
+<div class="category-card" onclick="openProblemPopup('property lawyer')">
 <i class="fa-solid fa-house"></i>
 <h4>Property Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('high court lawyer')">
+<div class="category-card" onclick="openProblemPopup('high court lawyer')">
 <i class="fa-solid fa-scale-balanced"></i>
 <h4>High Court Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('consumer court lawyer')">
+<div class="category-card" onclick="openProblemPopup('consumer court lawyer')">
 <i class="fa-solid fa-cart-shopping"></i>
 <h4>Consumer Court Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('corporate lawyer')">
+<div class="category-card" onclick="openProblemPopup('corporate lawyer')">
 <i class="fa-solid fa-briefcase"></i>
 <h4>Corporate Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('cyber lawyer')">
+<div class="category-card" onclick="openProblemPopup('cyber lawyer')">
 <i class="fa-solid fa-shield-halved"></i>
 <h4>Cyber Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('gst lawyer')">
+<div class="category-card" onclick="openProblemPopup('gst lawyer')">
 <i class="fa-solid fa-file-invoice-dollar"></i>
 <h4>GST Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('bail lawyer')">
+<div class="category-card" onclick="openProblemPopup('bail lawyer')">
 <i class="fa-solid fa-gavel"></i>
 <h4>Bail Lawyer</h4>
 </div>
 
-<div class="category-card" onclick="showCategory('accident lawyer')">
+<div class="category-card" onclick="openProblemPopup('accident lawyer')">
 <i class="fa-solid fa-car-burst"></i>
 <h4>Accident Lawyer</h4>
 </div>
@@ -907,13 +907,53 @@ Sign Up
 
 <div class="search-box">
 
-<input type="text" id="searchDistrict" placeholder="Enter district">
+<select id="searchDistrict">
 
-<button onclick="searchDistrictLawyers()">
-Search
-</button>
+<option value="">
+Select District
+</option>
+
+<option>Chennai</option>
+<option>Madurai</option>
+<option>Coimbatore</option>
+<option>Salem</option>
+
+</select>
 
 </div>
+
+<div class="search-box">
+
+<select id="searchCategory">
+
+<option value="">
+Select Category
+</option>
+
+<option>family lawyer</option>
+<option>criminal lawyer</option>
+<option>divorce lawyer</option>
+<option>civil lawyer</option>
+<option>property lawyer</option>
+<option>high court lawyer</option>
+<option>consumer court lawyer</option>
+<option>corporate lawyer</option>
+<option>cyber lawyer</option>
+<option>gst lawyer</option>
+<option>bail lawyer</option>
+<option>accident lawyer</option>
+
+</select>
+
+</div>
+
+<button
+class="submit-btn"
+onclick="searchDistrictLawyers()">
+
+Search Lawyers
+
+</button>
 
 <div id="searchResults"></div>
 
@@ -1433,7 +1473,7 @@ Email
 </a>
 
 <a
-href="https://wa.me/91${lawyer.phone}"
+href="https://wa.me/${cleanPhone(lawyer.phone)}"
 target="_blank"
 class="action-btn whatsapp-btn"
 >
@@ -1487,25 +1527,33 @@ renderLawyers(filtered,'lawyerResults');
 
 function searchDistrictLawyers(){
 
-const district=document.getElementById('searchDistrict').value.trim();
+const district =
+document.getElementById('searchDistrict').value;
 
-if(!district){
+const category =
+document.getElementById('searchCategory').value;
+
+if(!district || !category){
 
 showPopup(
 'error',
-'District Required',
-'Please enter district.'
+'Selection Required',
+'Please select district and category.'
 );
 
 return;
 
 }
 
-const filtered=lawyers.filter(lawyer=>
+const filtered = lawyers.filter(lawyer =>
 
 (lawyer.district || lawyer.place || '')
-.toLowerCase()
-.includes(district.toLowerCase())
+.toLowerCase() === district.toLowerCase()
+
+&&
+
+(lawyer.category || '')
+.toLowerCase() === category.toLowerCase()
 
 );
 
@@ -1627,6 +1675,179 @@ showPopup(
 }
 
 </script>
+<div class="overlay" id="problemOverlay"></div>
 
+<div class="book-popup" id="problemPopup">
+
+<h2 id="problemTitle">
+Problems
+</h2>
+
+<div id="problemList"></div>
+
+<button onclick="closeProblemPopup()">
+Close
+</button>
+
+</div>
+ <script>
+ const categoryProblems = {
+
+"family lawyer":[
+"Family disputes",
+"Child custody",
+"Domestic violence",
+"Marriage issues",
+"Legal separation"
+],
+
+"criminal lawyer":[
+"Police case",
+"Criminal complaint",
+"Fraud case",
+"Arrest issue",
+"Cyber crime"
+],
+
+"divorce lawyer":[
+"Mutual divorce",
+"Contested divorce",
+"Alimony issue",
+"Child custody",
+"Property settlement"
+],
+
+"civil lawyer":[
+"Civil disputes",
+"Agreement issue",
+"Money recovery",
+"Legal notice",
+"Land dispute"
+],
+
+"property lawyer":[
+"Property registration",
+"Land issue",
+"Property fraud",
+"Patta issue",
+"Encroachment"
+],
+
+"high court lawyer":[
+"High Court case",
+"Bail petition",
+"Writ petition",
+"Appeal case",
+"Legal notice"
+],
+
+"consumer court lawyer":[
+"Consumer complaint",
+"Online fraud",
+"Defective product",
+"Service issue",
+"Refund issue"
+],
+
+"corporate lawyer":[
+"Company registration",
+"Business agreement",
+"Startup legal",
+"Corporate dispute",
+"Legal compliance"
+],
+
+"cyber lawyer":[
+"Cyber crime",
+"Online harassment",
+"Social media issue",
+"Data theft",
+"Hacking issue"
+],
+
+"gst lawyer":[
+"GST filing",
+"GST notice",
+"Tax issue",
+"GST registration",
+"Penalty issue"
+],
+
+"bail lawyer":[
+"Regular bail",
+"Anticipatory bail",
+"Police arrest",
+"Court hearing",
+"Criminal petition"
+],
+
+"accident lawyer":[
+"Accident claim",
+"Insurance claim",
+"Road accident",
+"Compensation",
+"Injury claim"
+]
+
+};
+
+function openProblemPopup(category){
+
+const problems =
+categoryProblems[category] || [];
+
+let html='';
+
+problems.forEach(problem=>{
+
+html += `
+
+<div style="
+background:rgba(255,255,255,0.08);
+padding:14px;
+border-radius:16px;
+margin-bottom:12px;
+font-size:14px;
+border:1px solid rgba(255,255,255,0.08);
+cursor:pointer;
+"
+onclick="selectProblem('${category}')">
+
+${problem}
+
+</div>
+
+`;
+
+});
+
+document.getElementById('problemTitle').innerText =
+category.toUpperCase();
+
+document.getElementById('problemList').innerHTML =
+html;
+
+document.getElementById('problemPopup').classList.add('show');
+
+document.getElementById('problemOverlay').classList.add('show');
+
+}
+
+function closeProblemPopup(){
+
+document.getElementById('problemPopup').classList.remove('show');
+
+document.getElementById('problemOverlay').classList.remove('show');
+
+}
+
+function selectProblem(category){
+
+closeProblemPopup();
+
+showCategory(category);
+
+}
+</script>
 </body>
 </html>
