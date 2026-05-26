@@ -1334,7 +1334,7 @@ const dob=document.getElementById('dob').value;
 const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
 const phone=document.getElementById('phone').value.trim();
-const agree=document.getElementById('agree').checked;
+const agree = document.getElementById('agree').checked === true;
 
 if(!name || !dob || !gender || !district || !phone){
 
@@ -1430,6 +1430,8 @@ function openDashboard(user){
 
 document.getElementById('dashboard').style.display='block';
 
+document.getElementById('homePage').classList.add('active');
+
 document.getElementById('welcomeScreen').style.display='none';
 
 document.getElementById('signupForm').style.display='none';
@@ -1447,7 +1449,6 @@ document.getElementById('accPhone').innerText=user.phone;
 document.getElementById('accDevice').innerText=user.deviceId;
 
 }
-
 window.onload=function(){
 
 const user=JSON.parse(localStorage.getItem('lawyerUser'));
