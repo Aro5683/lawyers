@@ -1204,7 +1204,6 @@ placeholder="Explain your legal issue..."
 </button>
 
 </div>
-
 <div class="popup" id="popup">
 
 <i id="popupIcon" class="fa-solid fa-circle-check"></i>
@@ -1218,6 +1217,7 @@ OK
 </button>
 
 </div>
+
 
 <script>
 
@@ -1285,28 +1285,41 @@ let selectedLawyer = null;
 
 function showPopup(type,title,message){
 
-const popup=document.getElementById('popup');
+const popup =
+document.getElementById('popup');
+
+if(!popup) return;
+
+document.getElementById('popupTitle').innerText =
+title;
+
+document.getElementById('popupMessage').innerText =
+message;
 
 popup.classList.remove('success','error');
 
 popup.classList.add(type);
 
-document.getElementById('popupTitle').innerText=title;
+if(type === 'success'){
 
-document.getElementById('popupMessage').innerText=message;
+document.getElementById('popupIcon').className =
+'fa-solid fa-circle-check';
 
-if(type==='success'){
-document.getElementById('popupIcon').className='fa-solid fa-circle-check';
 }else{
-document.getElementById('popupIcon').className='fa-solid fa-circle-exclamation';
+
+document.getElementById('popupIcon').className =
+'fa-solid fa-circle-exclamation';
+
 }
 
 popup.classList.add('show');
 
 }
-
 function closePopup(){
-document.getElementById('popup').classList.remove('show');
+
+document.getElementById('popup')
+.classList.remove('show');
+
 }
 
 function showForm(type){
