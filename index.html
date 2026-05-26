@@ -236,14 +236,7 @@ font-size:13px;
 margin-bottom:20px;
 line-height:1.7;
 }
-.checkbox input{
-width:20px;
-height:20px;
-accent-color:#f59e0b;
-margin-top:2px;
-cursor:pointer;
-flex-shrink:0;
-}
+
 .submit-btn{
 width:100%;
 padding:16px;
@@ -1204,6 +1197,7 @@ placeholder="Explain your legal issue..."
 </button>
 
 </div>
+
 <div class="popup" id="popup">
 
 <i id="popupIcon" class="fa-solid fa-circle-check"></i>
@@ -1217,7 +1211,6 @@ OK
 </button>
 
 </div>
-
 
 <script>
 
@@ -1248,12 +1241,11 @@ getDeviceId();
 </script>
 
 <script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers1.js"></script>
-
 <script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers2.js"></script>
-
 <script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers3.js"></script>
-
 <script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers4.js"></script>
+
+
 
 <script>
 const dummyLawyers = [
@@ -1268,8 +1260,8 @@ address:"Demo Legal Chamber, Thanjavur",
 map:"https://maps.google.com/maps?q=thanjavur&output=embed"
 }
 
-
 ];
+
 const lawyers = [
 
 ...dummyLawyers,
@@ -1280,66 +1272,55 @@ const lawyers = [
 ...(window.lawyers4 || [])
 
 ];
-
 let selectedLawyer = null;
 
 function showPopup(type,title,message){
 
-const popup =
-document.getElementById('popup');
-
-if(!popup) return;
-
-document.getElementById('popupTitle').innerText =
-title;
-
-document.getElementById('popupMessage').innerText =
-message;
+const popup=document.getElementById('popup');
 
 popup.classList.remove('success','error');
 
 popup.classList.add(type);
 
-if(type === 'success'){
+document.getElementById('popupTitle').innerText=title;
 
-document.getElementById('popupIcon').className =
-'fa-solid fa-circle-check';
+document.getElementById('popupMessage').innerText=message;
 
+if(type==='success'){
+document.getElementById('popupIcon').className='fa-solid fa-circle-check';
 }else{
-
-document.getElementById('popupIcon').className =
-'fa-solid fa-circle-exclamation';
-
+document.getElementById('popupIcon').className='fa-solid fa-circle-exclamation';
 }
 
 popup.classList.add('show');
 
 }
+
 function closePopup(){
-
-document.getElementById('popup')
-.classList.remove('show');
-
+document.getElementById('popup').classList.remove('show');
 }
 
 function showForm(type){
 
 document.getElementById('welcomeScreen').style.display='none';
 
-document.getElementById('signupForm').classList.remove('active');
+document.getElementById('signupForm').style.display='none';
 
-document.getElementById('signinForm').classList.remove('active');
+document.getElementById('signinForm').style.display='none';
 
-if(type==='signup'){
-document.getElementById('signupForm').classList.add('active');
-}
+if(type === 'signup'){
 
-if(type==='signin'){
-document.getElementById('signinForm').classList.add('active');
-}
+document.getElementById('signupForm').style.display='block';
 
 }
 
+if(type === 'signin'){
+
+document.getElementById('signinForm').style.display='block';
+
+}
+
+}
 function registerUser(){
 
 const name=document.getElementById('name').value.trim();
@@ -1347,7 +1328,7 @@ const dob=document.getElementById('dob').value;
 const gender=document.getElementById('gender').value;
 const district=document.getElementById('district').value;
 const phone=document.getElementById('phone').value.trim();
-const agree = document.getElementById('agree').checked === true;
+const agree=document.getElementById('agree').checked;
 
 if(!name || !dob || !gender || !district || !phone){
 
@@ -1441,37 +1422,45 @@ showPopup(
 }
 function openDashboard(user){
 
-document.getElementById('dashboard').style.display='block';
-
-document.getElementById('homePage').classList.add('active');
-
 document.getElementById('welcomeScreen').style.display='none';
 
 document.getElementById('signupForm').style.display='none';
 
 document.getElementById('signinForm').style.display='none';
 
+document.getElementById('dashboard').style.display='block';
+
+document.querySelectorAll('.page').forEach(page=>{
+
+page.classList.remove('active');
+
+});
+
+document.getElementById('homePage')
+.classList.add('active');
+
 document.getElementById('topUsername').innerText =
 'Welcome, ' + user.name;
 
-document.getElementById('accName').innerText=user.name;
-document.getElementById('accDob').innerText=user.dob;
-document.getElementById('accGender').innerText=user.gender;
-document.getElementById('accDistrict').innerText=user.district;
-document.getElementById('accPhone').innerText=user.phone;
-document.getElementById('accDevice').innerText=user.deviceId;
+document.getElementById('accName').innerText =
+user.name;
+
+document.getElementById('accDob').innerText =
+user.dob;
+
+document.getElementById('accGender').innerText =
+user.gender;
+
+document.getElementById('accDistrict').innerText =
+user.district;
+
+document.getElementById('accPhone').innerText =
+user.phone;
+
+document.getElementById('accDevice').innerText =
+user.deviceId;
 
 }
-window.onload=function(){
-
-const user=JSON.parse(localStorage.getItem('lawyerUser'));
-
-if(user){
-openDashboard(user);
-}
-
-}
-
 function openPage(pageId,element){
 
 document.querySelectorAll('.page').forEach(page=>{
