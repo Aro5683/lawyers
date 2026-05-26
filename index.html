@@ -236,7 +236,14 @@ font-size:13px;
 margin-bottom:20px;
 line-height:1.7;
 }
-
+.checkbox input{
+width:20px;
+height:20px;
+accent-color:#f59e0b;
+margin-top:2px;
+cursor:pointer;
+flex-shrink:0;
+}
 .submit-btn{
 width:100%;
 padding:16px;
@@ -1240,13 +1247,13 @@ getDeviceId();
 
 </script>
 
-<script src="https://raw.githubusercontent.com/aro5683/lawyers/main/lawyers1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers1.js"></script>
 
-<script src="https://raw.githubusercontent.com/aro5683/lawyers/main/lawyers2.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers2.js"></script>
 
-<script src="https://raw.githubusercontent.com/aro5683/lawyers/main/lawyers3.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers3.js"></script>
 
-<script src="https://raw.githubusercontent.com/aro5683/lawyers/main/lawyers4.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/aro5683/lawyers@main/lawyers4.js"></script>
 
 <script>
 const dummyLawyers = [
@@ -1267,10 +1274,10 @@ const lawyers = [
 
 ...dummyLawyers,
 
-...lawyers1,
-...lawyers2,
-...lawyers3,
-...lawyers4
+...(window.lawyers1 || []),
+...(window.lawyers2 || []),
+...(window.lawyers3 || []),
+...(window.lawyers4 || [])
 
 ];
 
